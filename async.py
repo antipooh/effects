@@ -20,7 +20,8 @@ class RegistryEffectRunner:
 
         handler_cls = self._registry[eff_type]
         handler = awaitlet(self._container.get(handler_cls))
-        return awaitlet(handler(effect)) if isawaitable(handler) else handler(effect)
+        result = handler(effect)
+        return awaitlet(result) if isawaitable(result) else result
 
 
 def run_with_handlers(gen, handlers: HandlersRegistry, container: AsyncContainer):
